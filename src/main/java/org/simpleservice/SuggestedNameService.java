@@ -9,6 +9,7 @@ package org.simpleservice;
 
 import java.math.BigDecimal;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -23,22 +24,20 @@ import org.simpleservice.entity.SuggestedName;
  *
  * @author Juneau
  */
+@ApplicationScoped
+@Produces(MediaType.APPLICATION_JSON)
 @Path("suggestedNameService")
 public class SuggestedNameService {
 
     @PersistenceContext(unitName = "SimpleService_1.0PU")
     private EntityManager em;
 
-
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public SuggestedName find(@PathParam("id") BigDecimal id) {
         SuggestedName suggestedName = null;
         try {
-            suggestedName = (SuggestedName) 
-                    em.createQuery("select object(o) from  SuggestedName o " +
-                    "where o.id = :id")
+            suggestedName = em.createNamedQuery("SuggestedName.find", SuggestedName.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (NoResultException ex){
@@ -48,20 +47,14 @@ public class SuggestedNameService {
     }
    
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<SuggestedName> findAll() {
         List<SuggestedName> suggestedNames = null;
         try {
-            suggestedNames = em.createQuery("select object(o) from SuggestedName o")
-                    .getResultList();
+            suggestedNames = em.createNamedQuery("SuggestedName.findAll").getResultList();
         } catch (NoResultException ex){
             System.out.println("Error: "  + ex);
         }
         return suggestedNames;
     }
 
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }
