@@ -1,10 +1,5 @@
 package org.simpleservice;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.math.BigDecimal;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,11 +29,11 @@ public class SuggestedNameService {
     @Path("{id}")
     public Response find(@PathParam("id") BigDecimal id) {
         SuggestedName suggestedName = em.createNamedQuery("SuggestedName.find", SuggestedName.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        
-        return suggestedName != null 
-                ? Response.ok(suggestedName).build() 
+                .setParameter("id", id)
+                .getSingleResult();
+
+        return suggestedName != null
+                ? Response.ok(suggestedName).build()
                 : Response.status(Response.Status.NOT_FOUND).build();
     }
 
