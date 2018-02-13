@@ -5,19 +5,17 @@ package org.simpleservice;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.math.BigDecimal;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.simpleservice.entity.SuggestedName;
 
 /**
@@ -34,27 +32,20 @@ public class SuggestedNameService {
 
     @GET
     @Path("{id}")
-    public SuggestedName find(@PathParam("id") BigDecimal id) {
-        SuggestedName suggestedName = null;
-        try {
-            suggestedName = em.createNamedQuery("SuggestedName.find", SuggestedName.class)
+    public Response find(@PathParam("id") BigDecimal id) {
+        SuggestedName suggestedName = em.createNamedQuery("SuggestedName.find", SuggestedName.class)
                     .setParameter("id", id)
                     .getSingleResult();
-        } catch (NoResultException ex){
-            System.out.println("Error: "  + ex);
-        }
-        return suggestedName;
+        
+        return suggestedName != null 
+                ? Response.ok(suggestedName).build() 
+                : Response.status(Response.Status.NOT_FOUND).build();
     }
-   
+
     @GET
-    public List<SuggestedName> findAll() {
-        List<SuggestedName> suggestedNames = null;
-        try {
-            suggestedNames = em.createNamedQuery("SuggestedName.findAll").getResultList();
-        } catch (NoResultException ex){
-            System.out.println("Error: "  + ex);
-        }
-        return suggestedNames;
+    public Response findAll() {
+        List<SuggestedName> suggestedNames = em.createNamedQuery("SuggestedName.findAll").getResultList();
+        return Response.ok(suggestedNames).build();
     }
 
 }
