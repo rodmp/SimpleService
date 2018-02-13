@@ -12,3 +12,8 @@ Go to
 localhost:8080/SimpleService/rest/suggestedNameService
 localhost:8080/SimpleService/rest/suggestedNameService/{id}
 ```
+
+### Minor To-Do
+- [ ] Remove Jackson
+- [ ] Add GenericEntity List for findAll Response
+- [ ] Update Microprofile to 1.2
