@@ -9,7 +9,6 @@ package org.simpleservice;
 
 import java.math.BigDecimal;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -24,7 +23,6 @@ import org.simpleservice.entity.SuggestedName;
  *
  * @author Juneau
  */
-@Stateless
 @Path("suggestedNameService")
 public class SuggestedNameService {
 
