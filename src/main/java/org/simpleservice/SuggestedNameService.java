@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.simpleservice.entity.SuggestedName;
@@ -40,7 +41,8 @@ public class SuggestedNameService {
     @GET
     public Response findAll() {
         List<SuggestedName> suggestedNames = em.createNamedQuery("SuggestedName.findAll").getResultList();
-        return Response.ok(suggestedNames).build();
+        GenericEntity<List<SuggestedName>> list = new GenericEntity<List<SuggestedName>>(suggestedNames) {};
+        return Response.ok(list).build();
     }
 
 }
