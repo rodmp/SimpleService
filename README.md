@@ -18,3 +18,4 @@ localhost:8080/SimpleService/rest/suggestedNameService/{id}
 - [ ] Add GenericEntity List for findAll Response
 - [ ] Update Microprofile to 1.2
 - [ ] Dockerize
+- [ ] Add uberjar plugin
